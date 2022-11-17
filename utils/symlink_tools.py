@@ -59,9 +59,18 @@ def copy_from_list(imgs, outpath):
     """
 
     imgs = [line.strip() for line in imgs]
+    
+    xx = []
 
-    for img in tqdm(imgs, desc='symlinking...'):
-        copyfile(img, os.path.join(outpath, os.path.basename(img)))
+    for img in tqdm(imgs, desc='copying...'):
+        try:
+            copyfile(img, os.path.join(outpath, os.path.basename(img)))
+        except FileNotFoundError:
+            xx.append(img)
+
+    print('trouble copying ', len(xx), ' to ', outpath)
+    for line in xx:
+        print(line + '\n')
 
 if __name__=="__main__":
 
