@@ -5,6 +5,7 @@ import glob
 import argparse
 from datetime import datetime
 from tqdm import tqdm
+from shutil import copyfile
 
 __author__ = "Eric Orenstein"
 __email__ = "eorenstein@mbari.org"
@@ -46,7 +47,21 @@ def symlink_from_list(imgs, outpath):
 
     for img in tqdm(imgs, desc='symlinking...'):
         os.symlink(img, os.path.join(outpath, os.path.basename(img)))
+
     
+def copy_from_list(imgs, outpath):
+    """
+    copy all images from a list to the output path
+
+    :param imgs: image list
+    :param outpath: absolute path to output directory
+    :return :
+    """
+
+    imgs = [line.strip() for line in imgs]
+
+    for img in tqdm(imgs, desc='symlinking...'):
+        copyfile(img, os.path.join(outpath, os.path.basename(img)))
 
 if __name__=="__main__":
 
